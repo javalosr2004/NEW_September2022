@@ -28,15 +28,14 @@ for f in files:
     changes[f] = os.path.getmtime(f)
     index += 1
 
-
-while True:
-    for f in files:
-        if changes.get(f) < os.path.getmtime(f):
-            html = ''
-            with open('example_website.html', 'w+') as og_f:
+with open('example_website.html', 'w+') as og_f:
+    while True:
+        for f in files:
+            if changes.get(f) < os.path.getmtime(f):
+                html = ''
                 with open('example_html.txt', 'r') as ex_f:
                     html = ex_f.read()
                     html += f"\n<script src = './{f}'></script>\n</html>"
                 og_f.write(html)
-            changes[f] = os.path.getmtime(f)
-    time.sleep(time_sleep)
+                changes[f] = os.path.getmtime(f)
+        time.sleep(time_sleep)
